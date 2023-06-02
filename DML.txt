@@ -1,0 +1,233 @@
+--=================================================================================================
+--=================================================================================================
+--=====================================DML PART====================================================
+TRUNCATE TABLE ngr.Coustomers
+TRUNCATE TABLE ngr.Table_list
+TRUNCATE TABLE ngr.Chefs
+TRUNCATE TABLE ngr.FoodMenu
+TRUNCATE TABLE ngr.AdditionalFoodMenu
+TRUNCATE TABLE ngr.Booking
+TRUNCATE TABLE ngr.Orders
+TRUNCATE TABLE ngr.Payment
+TRUNCATE TABLE ngr.Cancellations
+TRUNCATE TABLE ngr.Employees
+Go
+
+Select * From ngr.Coustomers
+Select * From ngr.Table_list
+Select * From ngr.Chefs
+Select * From ngr.FoodMenu
+Select * From ngr.AdditionalFoodMenu
+Select * From ngr.Booking
+Select * From ngr.Orders
+Select * From ngr.Payment
+Select * From ngr.Cancellations
+Select * From ngr.Employees
+Go
+
+
+--				CROUD OPERATION IN ngr.Coustomers TABLE_01
+
+Insert into ngr.Coustomers ([Name], [Address], MobileNo, Email) 
+						Values ('Ms. Raihan', 'Madar Bari', '01658920541', 'ms.raihan@gmail.com'),
+								('Ms. Giyas', 'Lohagora', '01658650541', 'ms.Gias@gmail.com'),
+								('Sahajan', 'Feni', '01658920241', 'sahajan@gmail.com'),
+								('Hasan', 'Comilla', '01588920541', 'hasan@gmail.com'),
+								('Sifat', 'Noakhali', '01968920541', 'abc@gmail.com'),
+								('Hossain', 'ctg', '01867920541', 'des@gmail.com'),
+								('Alauddin', 'Ctg', '01935874541', 'fdr@gmail.com');
+GO
+
+---======UPDATE
+UPDATE ngr.Coustomers
+set [Name] = 'hafez'
+WHERE CoustomerID = 2
+GO
+
+---======DELETE
+DELETE FROM ngr.Coustomers
+WHERE CoustomerID = 2
+GO
+
+
+--											INSERT INTO ngr.Table_list TABLE_02
+
+Insert into ngr.Table_list Values (01, 'AC Singal Table', 200),
+								  (02, 'AC Double Table', 400),
+								  (03, 'NonAC Singal Table', 100),
+								  (04, 'NonAC Double Table', 200),
+								  (05, 'AC Singal Table', 200),
+								  (06, 'AC Double Table', 400),
+								  (07, 'NonAC Singal Table', 100),
+								  (08, 'NonAC Double Table', 200);
+GO
+
+--									INSERT INTO ngr.Chefs TABLE_03
+
+Insert into ngr.Chefs (ChefName, [Fee Per Dish]) Values ('Grant Achatz', 1000), 
+												 ('Nicolas Appert', 2000),
+												 ('Mario Batali', 2000),
+												 ('James Beard', 4000),
+												 ('Paul Bocuse', 5000),
+												 ('Anthony Bourdain', 5000),
+												 ('Robert Carrier', 3000),
+												 ('Julia Child', 2500);
+GO
+
+--									INSERT INTO ngr.FoodMenu TABLE_04
+
+Insert into ngr.FoodMenu (MenuType, Decription, Price) 
+				Values ('Chicken pot pie', 'abc', 1000),
+						('Mashed potatoes', 'abc', 500),
+						('Fried chicken', 'abc', 800),
+						('Chicken soup.', 'abc', 1000),
+						('Meatloaf', 'abc', 500),
+						('Lasagna', 'abc', 500);
+GO
+
+--									INSERT INTO ngr.AdditionalFoodMenu TABLE_05
+Insert into ngr.AdditionalFoodMenu ([Add additional things to menu], AdFoodPrice)  
+				Values ('things1', 50), ('things2', 30), ('thing3', 40);
+GO
+
+--									INSERT INTO ngr.Booking TABLE_06
+
+Insert into ngr.Booking (CoustomerID, BookingDate, ReservationDate, ReservationTime) 
+				Values (1,'', '10/12/2022', '12:00 am' ),
+						(2,'', '12/12/2022', '08:00 am'),
+						(3,'', '05/12/2022', '07:00 pm'),
+						(4,'', '07/12/2022', '03:00 pm'),
+						(5,'', '04/12/2022', '05:00 am');
+GO
+
+--									INSERT INTO ngr.Orders TABLE_07
+Insert into ngr.Orders (BookingID, TableID, ChefID, MenuID, AdMenuID) 
+				Values  (1, 1, 5, 3, 3),
+						(2, 2, 1, 1, 2),
+						(3, 4, 4, 4, 1),
+						(4, 3, 2, 2, 2),
+						(5, 1, 2, 3, 1);
+GO
+
+--									INSERT INTO ngr.Payment TABLE_08
+
+Insert into ngr.Payment (BookingID, AdvencePayment, Discount, VAT, PaidTime) 
+				Values (1, 1000, .02, .15, ''), (2, 2000, .3 , .15, ''),
+						(3, 1000, .3 , .15, ''), (4, 1500, .2 , .15, ''),
+						(5, 1000, .25 , .15, ''), (6, 1000, .15 , .15, '');
+GO
+
+--									INSERT INTO ngr.Cancellations TABLE_09
+
+Insert into ngr.Cancellations (BookingID, CancellationTime, Reason, CancellationDuration) 
+						Values (5,'','abc adb.........','Permanent');
+GO
+
+Select * From ngr.Coustomers
+Select * From ngr.Table_list
+Select * From ngr.Chefs
+Select * From ngr.FoodMenu
+Select * From ngr.AdditionalFoodMenu
+Select * From ngr.Booking
+Select * From ngr.Orders
+Select * From ngr.Payment
+Select * From ngr.Cancellations
+Select * From ngr.Employees
+Go
+
+--=============================INNER JOIN
+
+SELECT C.CoustomerID,[Name],[Address],MobileNo,Discount,AdvencePayment
+FROM ngr.Coustomers C
+JOIN ngr.Booking B ON C.CoustomerID = B.CoustomerID
+JOIN ngr.Payment P ON P.paymentID = B.BookingID
+GO
+
+--============================= LEFT JOIN
+
+SELECT C.CoustomerID,[Name],[Address],MobileNo,ReservationDate
+FROM  ngr.Coustomers C
+LEFT JOIN ngr.Booking B
+ON C.CoustomerID=B.CoustomerID
+GO
+
+--Right Outer Join
+SELECT C.CoustomerID,[Name],[Address],MobileNo,ReservationDate
+FROM  ngr.Coustomers C
+RIGHT JOIN ngr.Booking B
+ON C.CoustomerID=B.CoustomerID
+GO
+
+--Full Outer Join
+SELECT *
+FROM ngr.Coustomers c
+FULL JOIN ngr.Booking b ON c.CoustomerID = b.BookingID
+FULL JOIN ngr.Orders o ON b.BookingID = o.BookingID
+FULL JOIN ngr.Table_list t ON t.TableID = o.BookingID
+FULL JOIN ngr.FoodMenu f ON f.MenuID = o.MenuID
+FULL JOIN ngr.AdditionalFoodMenu af ON af.AdMenuID = o.AdMenuID
+FULL JOIN ngr.Chefs ch ON ch.ChefID = o.ChefID
+FULL JOIN ngr.Payment pay ON pay.BookingID = b.BookingID
+GO
+
+--Cross Join
+SELECT *
+FROM ngr.FoodMenu 
+CROSS JOIN ngr.AdditionalFoodMenu
+
+--Self join
+SELECT *
+FROM ngr.Cancellations c, ngr.Cancellations can
+WHERE c.CancellationID<>can.CancellationID
+GO
+
+--Six Clauses
+SELECT BookingID, count(OrderID)
+FROM ngr.Orders
+WHERE TableID>0 
+GROUP BY BookingID
+HAVING count(OrderID)>0
+
+--Union 
+SELECT paymentID 
+FROM ngr.Payment
+WHERE AdvencePayment>500
+UNION
+SELECT OrderID
+FROM ngr.Orders
+
+
+--Sub Query
+SELECT paymentID 
+FROM ngr.Payment
+WHERE AdvencePayment>(SELECT AdvencePayment FROM ngr.Payment WHERE AdvencePayment>0)
+GO
+
+--CTE
+WITH cte_Ade
+AS
+(SELECT AdvencePayment FROM ngr.Payment WHERE AdvencePayment>0)
+
+SELECT paymentID FROM ngr.Payment
+FULL JOIN cte_Ade ON ngr.Payment.paymentID = cte_Ade.AdvencePayment
+GO
+
+--Cube
+SELECT BookingID, count(OrderID)
+FROM ngr.Orders
+WHERE TableID>0 
+GROUP BY BookingID WITH CUBE
+GO
+
+--Rollup
+SELECT BookingID, count(OrderID)
+FROM ngr.Orders
+GROUP BY BookingID WITH ROLLUP
+GO
+
+--Grouping sets
+SELECT OrderID, BookingID, count(OrderID)
+FROM ngr.Orders
+GROUP BY GROUPING SETS (OrderID, BookingID)
+GO
+
